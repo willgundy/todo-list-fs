@@ -19,7 +19,7 @@ describe('backend-express-template routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
-  it('signs up a new user with mock data', () => {
+  it('signs up a new user with mock data', async () => {
     const res = await request(app).post('/api/v1/users').send(mockUser);
 
     expect(res.body).toEqual({
