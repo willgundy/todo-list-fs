@@ -28,19 +28,19 @@ describe('backend-express-template routes', () => {
     })
   });
 
-  it('signs in an existing user', () => {
+  it.skip('signs in an existing user', () => {
     
   });
 
-  it('returns the current user if they are logged in', () => {
+  it.skip('returns the current user if they are logged in', () => {
     
   });
 
-  it('errors if the user is not logged in', () => {
+  it.skip('errors if the user is not logged in', () => {
     
   });
 
-  it('deletes the session for a user', () => {
+  it.skip('deletes the session for a user', () => {
     
   });
   afterAll(() => {
