@@ -29,7 +29,7 @@ describe('backend-express-template routes', () => {
   });
 
   it.skip('signs in an existing user', () => {
-    
+    //can't figure out how to test this one until I add delete session
   });
 
   it.skip('returns the current user if they are logged in', () => {
@@ -41,8 +41,11 @@ describe('backend-express-template routes', () => {
   });
 
   it.skip('deletes the session for a user', () => {
-    
+    const [agent] = await registerAndLogin();
+    const res = await agent.delete('/api/v1/users/sessions');
+    expect(res.status).toBe(204);
   });
+  
   afterAll(() => {
     pool.end();
   });
