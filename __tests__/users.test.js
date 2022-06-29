@@ -29,16 +29,31 @@ describe('backend-express-template routes', () => {
     })
   });
 
-  it.skip('signs in an existing user', () => {
+  it.skip('signs in an existing user', async () => {
     //can't figure out how to test this one until I add delete session
+    const [agent] = await registerAndLogin();
+    const res = await agent.delete('/api/v1/users/sessions');
+    expect(res.status).toBe(200);
+
+    const { email, password } = mockUser;
+
+    const resp = await agent.post('/api/v1/users/sessions').send({ email, password });
+    expect(resp.status).toBe(200);
   });
 
-  it.skip('returns the current user if they are logged in', () => {
-    
+  it('returns the current user if they are logged in', async () => {
+    const [agent, user] = await registerAndLogin();
+    const me = await agent.get('/api/v1/users/me');
+    expect(me.body).toEqual({
+      ...user,
+      exp: expect.any(Number),
+      iat: expect.any(Number),
+    });
   });
 
-  it.skip('errors if the user is not logged in', () => {
-    
+  it5tm  ('errors if the user is not logged in', async () => {
+    const me = await agent.get('/api/v1/users/me');
+    expect(me.status).toEqual(403);
   });
 
   it('deletes the session for a user', async () => {
