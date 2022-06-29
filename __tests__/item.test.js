@@ -24,7 +24,16 @@ describe('backend-express-template routes', () => {
     return setup(pool);
   });
   it('allow user to create a new shopping item', async () => {
-
+    const [agent, user] = await registerAndLogin();
+    const resp = await agent.post('/api/v1/items').send({ description: 'bread', qty: 1 });
+    expect(resp.status).toEqual(200);
+    expect(resp.body).toEqual({
+      id: expect.any(String),
+      description: 'bread',
+      qty: 1,
+      user_id: user.id,
+      bought: false,
+    })
   });
 
   it('should return all items associated to the user', async () => {
