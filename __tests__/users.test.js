@@ -11,6 +11,7 @@ const registerAndLogin = async (userProps = {}) => {
   const agent = request.agent(app);
   const user = await UserService.create({ ...mockUser, ...userProps });
   const { email } = user;
+  const password = userProps.password ?? mockUser.password;
   await agent.post('/api/v1/users/sessions').send({ email, password });
   return [agent, user];
 }
@@ -40,12 +41,12 @@ describe('backend-express-template routes', () => {
     
   });
 
-  it.skip('deletes the session for a user', () => {
+  it('deletes the session for a user', async () => {
     const [agent] = await registerAndLogin();
     const res = await agent.delete('/api/v1/users/sessions');
-    expect(res.status).toBe(204);
+    expect(res.status).toBe(200);
   });
-  
+
   afterAll(() => {
     pool.end();
   });
