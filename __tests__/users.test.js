@@ -51,8 +51,8 @@ describe('backend-express-template routes', () => {
     });
   });
 
-  it5tm  ('errors if the user is not logged in', async () => {
-    const me = await agent.get('/api/v1/users/me');
+  it('errors if the user is not logged in', async () => {
+    const me = await request(app).get('/api/v1/users/me');
     expect(me.status).toEqual(403);
   });
 
