@@ -33,7 +33,7 @@ describe('backend-express-template routes', () => {
       qty: 1,
       user_id: user.id,
       bought: false,
-    })
+    });
   });
 
   it('should return all items associated to the user', async () => {
