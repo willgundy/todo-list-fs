@@ -37,7 +37,11 @@ describe('backend-express-template routes', () => {
   });
 
   it('should return all items associated to the user', async () => {
-
+    const [agent] = await registerAndLogin();
+    await agent.post('/api/v1/items').send({ description: 'bread', qty: 1 });
+    const resp = await agent.get('/api/v1/items');
+    expect(resp.status).toEqual(200);
+    expect(resp.body.length).toEqual(1);
   });
 
   it('should return error if the user is not signed in', async () => {
