@@ -56,13 +56,13 @@ describe('backend-express-template routes', () => {
     expect(resp.status).toEqual(200);
     expect(resp.body.length).toEqual(1);
     const res = await agent.put(`/api/v1/items/${item.id}`).send({ bought: true });
-    console.log(res.body);
     expect(res.status).toBe(200);
     expect(res.body).toEqual({ ...item, bought: true });
   });
 
   it('should not allow users who are not signed in to update an item', async () => {
-
+    const res = await request(app).put('/api/v1/items/1').send({ bought: true });
+    expect(res.status).toBe(401);
   });
 
   it('should delete items for authorized users', async () => {
