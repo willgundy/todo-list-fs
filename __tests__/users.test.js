@@ -13,7 +13,7 @@ const registerAndLogin = async (userProps = {}) => {
   const password = userProps.password ?? mockUser.password;
   await agent.post('/api/v1/users/sessions').send({ email, password });
   return [agent, user];
-}
+};
 
 describe('backend-express-template routes', () => {
   beforeEach(() => {
@@ -25,10 +25,10 @@ describe('backend-express-template routes', () => {
     expect(res.body).toEqual({
       id: expect.any(String),
       email: 'test@example.com'
-    })
+    });
   });
 
-  it.skip('signs in an existing user', async () => {
+  it('signs in an existing user', async () => {
     //can't figure out how to test this one until I add delete session
     const [agent] = await registerAndLogin();
     const res = await agent.delete('/api/v1/users/sessions');
@@ -40,7 +40,7 @@ describe('backend-express-template routes', () => {
     expect(resp.status).toBe(200);
   });
 
-  it.skip('returns the current user if they are logged in', async () => {
+  it('returns the current user if they are logged in', async () => {
     const [agent, user] = await registerAndLogin();
     console.log(agent);
     const me = await agent.get('/api/v1/users/me');

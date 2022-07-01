@@ -45,11 +45,19 @@ describe('backend-express-template routes', () => {
   });
 
   it('should return error if the user is not signed in', async () => {
-
+    const resp = await request(app).get('/api/v1/items');
+    expect(resp.status).toEqual(401);
   });
 
   it('should allow user to update an item if they are signed in', async () => {
-
+    const [agent, user] = await registerAndLogin();
+    const item = await Item.insert({ description: 'bread', qty: 1, user_id: user.id });
+    const resp = await agent.get('/api/v1/items');
+    expect(resp.status).toEqual(200);
+    expect(resp.body.length).toEqual(1);
+    const res = await agent.put(`/api/v1/items/${item.id}`).send({ bought: true });
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({ ...item, bought: true });
   });
 
   it('should not allow users who are not signed in to update an item', async () => {
