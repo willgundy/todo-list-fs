@@ -66,7 +66,20 @@ describe('backend-express-template routes', () => {
   });
 
   it('should delete items for authorized users', async () => {
+    const [agent, user] = await registerAndLogin();
+    const item = await Item.insert({
+      description: 'apples',
+      qty: 6,
+      user_id: user.id,
+    });
+    const res = await agent.get('/api/v1/items');
+    expect(res.status).toEqual(200);
+    expect(res.body.length).toEqual(1);
+    const resp = await agent.delete(`/api/v1/items/${item.id}`);
+    expect(resp.status).toBe(200);
 
+    const check = await Item.getById(item.id);
+    expect(check).toBeNull();
   });
 
   afterAll(() => {
