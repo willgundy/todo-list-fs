@@ -56,6 +56,7 @@ describe('backend-express-template routes', () => {
     expect(resp.status).toEqual(200);
     expect(resp.body.length).toEqual(1);
     const res = await agent.put(`/api/v1/items/${item.id}`).send({ bought: true });
+    console.log(res.body);
     expect(res.status).toBe(200);
     expect(res.body).toEqual({ ...item, bought: true });
   });

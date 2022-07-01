@@ -42,7 +42,6 @@ describe('backend-express-template routes', () => {
 
   it('returns the current user if they are logged in', async () => {
     const [agent, user] = await registerAndLogin();
-    console.log(agent);
     const me = await agent.get('/api/v1/users/me');
     expect(me.body).toEqual({
       ...user,
