@@ -78,8 +78,8 @@ describe('backend-express-template routes', () => {
     const resp = await agent.delete(`/api/v1/items/${item.id}`);
     expect(resp.status).toBe(200);
 
-    const check = await Item.getById(item.id);
-    expect(check).toBeNull();
+    const res2 = await agent.get('/api/v1/items');
+    expect(res2.body.length).toEqual(0);
   });
 
   afterAll(() => {
